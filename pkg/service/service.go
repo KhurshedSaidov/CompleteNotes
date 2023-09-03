@@ -77,3 +77,7 @@ func (s *NoteService) DeleteNote(id uint) error {
 func (s *NoteService) GetNoteByID(id uint) (*models.Note, error) {
 	return s.Repository.GetByID(id)
 }
+
+func (s *NoteService) GetAllNotes(userId uint) (*models.Note, error) {
+	return s.Repository.GetAllNotes(userId)
+}

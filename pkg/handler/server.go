@@ -11,8 +11,9 @@ func InitRouters(handler *UserHandler, noteHandler *NoteHandler, authMiddleware 
 	authRoute := r.PathPrefix("/auth").Subrouter()
 	authRoute.Use(authMiddleware.Middleware)
 	authRoute.HandleFunc("/notes", noteHandler.CreateNote).Methods("POST")
-	//r.HandleFunc("/notes/{id}", handler.UpdateNoteHandler).Methods("PUT")
-	//r.HandleFunc("/notes/{id}", handler.DeleteNoteHandler).Methods("DELETE")
-	//r.HandleFunc("/notes/{id}", handler.GetNoteByIDHandler).Methods("GET")
+	authRoute.HandleFunc("/notes/{id}", noteHandler.UpdateNoteHandler).Methods("PUT")
+	authRoute.HandleFunc("/notes/{id}", noteHandler.DeleteNoteHandler).Methods("DELETE")
+	authRoute.HandleFunc("/notes/{id}", noteHandler.GetNoteByIDHandler).Methods("GET")
+	authRoute.HandleFunc("/notes", noteHandler.GetAllUserNotes).Methods("GET")
 	return r
 }

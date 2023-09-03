@@ -47,12 +47,20 @@ func (r *NotesRepository) GetByID(id uint) (*models.Note, error) {
 	return note, nil
 }
 
+func (r *NotesRepository) GetAllNotes(userId uint) (*models.Note, error) {
+	var notes models.Note
+	if err := r.DB.Where("user_id = ?", userId).Find(&notes).Error; err != nil {
+		return nil, err
+	}
+	return &notes, nil
+}
+
 func (r *NotesRepository) Create(note *models.Note) error {
 	return config.DB.Create(note).Error
 }
 
 func (r *NotesRepository) Update(note *models.Note) error {
-	return r.DB.Save(note).Error
+	return config.DB.Save(note).Error
 }
 
 func (r *NotesRepository) Delete(id uint) error {
